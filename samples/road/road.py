@@ -80,25 +80,27 @@ class RoadConfig(Config):
     Derives from the base Config class and overrides values specific
     to the COCO dataset.
     """
+
     # Give the configuration a recognizable name
     NAME = "road"
 
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
-    IMAGES_PER_GPU = 2
+    # GPU_COUNT = 1
+    # IMAGES_PER_GPU = 5
 
     # Uncomment to train on 8 GPUs (default is 1)
     # GPU_COUNT = 8
 
     # Number of classes (including background)
     #CHANGE ACCORDING TO DATASET
-    NUM_CLASSES = 6 # Motorcycle Night Ride (Semantic Segmentation) has 6 classes
+    NUM_CLASSES = 1 + 6 # Motorcycle Night Ride (Semantic Segmentation) has 6 classes
 
     # Number of training steps per epoch
-    STEPS_PER_EPOCH = 100
+    # STEPS_PER_EPOCH = 100
 
     # Skip detections with < 90% confidence
-    DETECTION_MIN_CONFIDENCE = 0.9
+    # DETECTION_MIN_CONFIDENCE = 0.9
 
 ############################################################
 #  Dataset
@@ -111,7 +113,8 @@ class RoadDataset(utils.Dataset):
         dataset_dir: Root directory of the dataset.
         subset: Subset to load: train or val
         """
-        coco = COCO("../../datasets/road/COCO_motorcycle (pixel).json")
+
+        coco = COCO("../../datasets/road/{}.json".format(subset))
         image_dir = "../../datasets/road/images" 
 
         categories = coco.loadCats(coco.getCatIds())

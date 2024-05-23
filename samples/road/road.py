@@ -87,14 +87,19 @@ class RoadConfig(Config):
     # We use a GPU with 12GB memory, which can fit two images.
     # Adjust down if you use a smaller GPU.
     # GPU_COUNT = 1
-    # IMAGES_PER_GPU = 5
 
     # Uncomment to train on 8 GPUs (default is 1)
-    # GPU_COUNT = 8
+    #GPU_COUNT = 2
+    IMAGES_PER_GPU = 2
 
+    NUM_CLASSES = 1 + 6 # Motorcycle Night Ride (Semantic Segmentation) has 6 classes
+
+    
+    STEPS_PER_EPOCH = 100
+    # Skip detections with < 90% confidence
+    DETECTION_MIN_CONFIDENCE = 0.9
     # Number of classes (including background)
     #CHANGE ACCORDING TO DATASET
-    NUM_CLASSES = 1 + 6 # Motorcycle Night Ride (Semantic Segmentation) has 6 classes
 
     # Number of training steps per epoch
     # STEPS_PER_EPOCH = 100

@@ -37,6 +37,7 @@ from pycocotools.coco import COCO
 from pycocotools import mask as maskUtils
 from pycocotools.cocoeval import COCOeval
 import imgaug
+import cv2
 
 
 
@@ -187,8 +188,7 @@ class RoadDataset(utils.Dataset):
         masks: A bool array of shape [height, width, instance count] with
             one mask per instance.
         class_ids: a 1D array of class IDs of the instance masks.
-        """
-        # If not a COCO image, delegate to parent class.
+        """        # If not a COCO image, delegate to parent class.
         image_info = self.image_info[image_id]
         if image_info["source"] != "coco":
             return super(RoadDataset, self).load_mask(image_id)

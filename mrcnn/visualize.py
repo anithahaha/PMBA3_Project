@@ -58,6 +58,7 @@ def display_images(images, titles=None, cols=4, cmap=None, norm=None,
     plt.show()
 
 
+
 def random_colors(N, bright=True):
     """
     Generate random colors.
@@ -146,7 +147,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
         elif scores[i] < min_score:
             continue
 
-        color = colors[i]
+        color = colors[class_id]
 
         # Bounding box
         if not np.any(boxes[i]):
@@ -166,6 +167,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
                 score = scores[i] if scores is not None else None
                 label = class_names[class_id]
                 caption = "{} {:.3f}".format(label, score) if score else label
+                col = colors[class_ids[i]]
             else:
                 caption = captions[i]
             ax.text(x1, y1 + 8, caption,
@@ -174,7 +176,7 @@ def display_instances(image, boxes, masks, class_ids, class_names,
         # Mask
         mask = masks[:, :, i]
         if show_mask:
-            masked_image = apply_mask(masked_image, mask, color)
+            masked_image = apply_mask(masked_image, mask, col)
 
         # Mask Polygon
         if show_mask_polygon:
@@ -186,9 +188,10 @@ def display_instances(image, boxes, masks, class_ids, class_names,
             for verts in contours:
                 # Subtract the padding and flip (y, x) to (x, y)
                 verts = np.fliplr(verts) - 1
-                p = Polygon(verts, facecolor="none", edgecolor=color)
+                p = Polygon(verts, facecolor="none", edgecolor=col)
                 ax.add_patch(p)
     ax.imshow(masked_image.astype(np.uint8))
+    plt.savefig('c:/MASK-RCNN-TF2/images_detect\test\{}.jpg'.format(title),bbox_inches='tight', pad_inches=-0.5,orientation= 'landscape') 
     if not (save_fig_path is None):
         plt.savefig(save_fig_path, bbox_inches="tight")
     if auto_show:

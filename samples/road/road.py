@@ -39,22 +39,6 @@ from pycocotools.cocoeval import COCOeval
 import imgaug
 import cv2
 
-
-
-# Download and install the Python COCO tools from https://github.com/waleedka/coco
-# That's a fork from the original https://github.com/pdollar/coco with a bug
-# fix for Python 3.
-# I submitted a pull request https://github.com/cocodataset/cocoapi/pull/50
-# If the PR is merged then use the original repo.
-# Note: Edit PythonAPI/Makefile and replace "python" with "python3".
-# from pycocotools.coco import COCO
-# from pycocotools.cocoeval import COCOeval
-# from pycocotools import mask as maskUtils
-
-# import zipfile
-# import urllib.request
-# import shutil
-
 # Root directory of the project
 ROOT_DIR = os.path.abspath("../../")
 
@@ -75,11 +59,10 @@ DEFAULT_DATASET_YEAR = "2014"
 #  Configurations
 ############################################################
 
-
 class RoadConfig(Config):
-    """Configuration for training on MS COCO.
+    """Configuration for training on Road.
     Derives from the base Config class and overrides values specific
-    to the COCO dataset.
+    to the Road dataset.
     """
 
     # Give the configuration a recognizable name
@@ -155,27 +138,6 @@ class RoadDataset(utils.Dataset):
                     imgIds=[i], catIds=class_ids, iscrowd=None)))
         if return_coco:
                 return coco
-
-        # Add classes. We have only one class to add.
-        # self.add_class("road", 1, "undrivable")
-        # self.add_class("road", 2, "road")
-        # self.add_class("road", 3, "lanemark")
-        # self.add_class("road", 4, "my bike")
-        # self.add_class("road", 5, "rider")
-        # self.add_class("road", 6, "movable")
-
-        # Train or validation dataset?
-        # assert subset in ["train", "val"]
-        # dataset_dir = os.path.join(dataset_dir, subset)
-
-        # if auto_download is True:
-        #     self.auto_download(dataset_dir, subset, year)
-
-        # coco = COCO("{}/annotations/instances_{}{}.json".format(dataset_dir, subset, year))
-        # if subset == "minival" or subset == "valminusminival":
-        #     subset = "val"
-        # image_dir = "{}/{}{}".format(dataset_dir, subset, year)
-
 
     def load_mask(self, image_id):
         """Load instance masks for the given image.
